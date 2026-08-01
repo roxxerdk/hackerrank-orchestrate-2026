@@ -1,13 +1,13 @@
-import os
+from pathlib import Path
 
 # Root directory of the repository
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_DIR = Path(__file__).resolve().parents[2]
 
 # Dataset Directory Path
-DATASET_DIR = os.path.join(ROOT_DIR, "dataset")
+DATASET_DIR = ROOT_DIR / "dataset"
 
 # Cache Directory Path
-CACHE_DIR = os.path.join(ROOT_DIR, "code", "app", "cache")
+CACHE_DIR = ROOT_DIR / "code" / "cache"
 
-# Output CSV Path
-OUTPUT_CSV_PATH = os.path.join(ROOT_DIR, "dataset", "output.csv")
+# Output CSV Path (during development)
+OUTPUT_CSV_PATH = ROOT_DIR / "code" / "output" / "output.csv"
