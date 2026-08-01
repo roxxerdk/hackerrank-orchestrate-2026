@@ -27,5 +27,12 @@ TOP_P = 0.1
 TOP_K = 20
 MAX_RETRIES = 2
 
+# Feature Extraction Thresholds & Capacities
+BUSINESS_REPORT_CAP = 10
+NOTIFICATION_LOAD_CAP = 20
+INTERACTION_CAP = 50
+FORWARD_THRESHOLD = 5
+
+
 
 
