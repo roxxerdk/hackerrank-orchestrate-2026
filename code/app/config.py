@@ -12,10 +12,20 @@ CACHE_DIR = ROOT_DIR / "code" / "cache"
 # Output CSV Path (during development)
 OUTPUT_CSV_PATH = ROOT_DIR / "code" / "output" / "output.csv"
 
-# Global Model Configuration
-MODEL_NAME = "gemini-2.5-flash"  # Default configuration model
+# Global Model Configurations
+IMAGE_MODEL = "gemini-2.5-flash"
+VOICE_MODEL = "gemini-2.5-flash"
 
 # Prompt & Cache Version Control
-PROMPT_VERSION = "media_v1"
+IMAGE_PROMPT_VERSION = "image_v1"
+VOICE_PROMPT_VERSION = "voice_v1"
 CACHE_VERSION = "1.0"
+
+# Generation & Model Execution Parameters
+TEMPERATURE = 0.1
+TOP_P = 0.1
+TOP_K = 20
+MAX_RETRIES = 2
+
+
 

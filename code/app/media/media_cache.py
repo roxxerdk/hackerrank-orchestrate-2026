@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional, Any
 from pydantic import BaseModel, Field, ValidationError
 
-from app.config import CACHE_DIR, MODEL_NAME, PROMPT_VERSION, CACHE_VERSION
+from app.config import CACHE_DIR, IMAGE_MODEL, VOICE_MODEL, IMAGE_PROMPT_VERSION, VOICE_PROMPT_VERSION, CACHE_VERSION
 from app.media.media_loader import MediaInfo, MediaType
 from app.utils.json_utils import safe_json_load, safe_json_dump, utc_now_iso
 
@@ -47,9 +47,11 @@ def load_analysis(media_info: MediaInfo) -> Optional[CacheMetadata]:
         metadata = CacheMetadata.model_validate(parsed)
         
         # Invalidate if model configuration or prompt versions have changed
+        expected_model = IMAGE_MODEL if metadata.media_type == MediaType.IMAGE else VOICE_MODEL
+        expected_prompt_ver = IMAGE_PROMPT_VERSION if metadata.media_type == MediaType.IMAGE else VOICE_PROMPT_VERSION
         if (metadata.version != CACHE_VERSION or 
-            metadata.model != MODEL_NAME or 
-            metadata.prompt_version != PROMPT_VERSION):
+            metadata.model != expected_model or 
+            metadata.prompt_version != expected_prompt_ver):
             return None
             
         return metadata
@@ -69,11 +71,14 @@ def store_analysis(media_info: MediaInfo, analysis: dict[str, Any]) -> None:
     # Ensure cache folder exists
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     
+    expected_model = IMAGE_MODEL if media_info.media_type == MediaType.IMAGE else VOICE_MODEL
+    expected_prompt_ver = IMAGE_PROMPT_VERSION if media_info.media_type == MediaType.IMAGE else VOICE_PROMPT_VERSION
+    
     # Construct CacheMetadata payload
     metadata = CacheMetadata(
         version=CACHE_VERSION,
-        model=MODEL_NAME,
-        prompt_version=PROMPT_VERSION,
+        model=expected_model,
+        prompt_version=expected_prompt_ver,
         created_at=utc_now_iso(),
         media_id=media_info.media_id,
         media_type=media_info.media_type,
