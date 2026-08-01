@@ -22,9 +22,18 @@ def safe_json_load(text: str) -> dict:
     cleaned_text = strip_markdown_fences(text)
     return json.loads(cleaned_text)
 
+from datetime import datetime, timezone
+
 def safe_json_dump(data: dict, indent: int = 4) -> str:
     """
     Safely serialize a dictionary into a clean, formatted JSON string.
     """
     return json.dumps(data, indent=indent, ensure_ascii=False)
+
+def utc_now_iso() -> str:
+    """
+    Returns current time in UTC formatted as an ISO-8601 string (with 'Z' suffix).
+    """
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
