@@ -12,8 +12,13 @@ class ActionType(str, Enum):
 class RuleCategory(str, Enum):
     SAFETY = "safety"
     USER_PREFERENCE = "user_preference"
-    URGENCY = "urgency"
-    SYSTEM_LOAD = "system_load"
+    BUSINESS = "business"
+    GROUP = "group"
+    MESSAGE = "message"
+    MEDIA = "media"
+    RELATIONSHIP = "relationship"
+    TEMPORAL = "temporal"
+    SYSTEM = "system"
 
 from app.features.routing_features import ActivityLevel, TemporalBucket
 
@@ -99,6 +104,7 @@ class RetrievedRule(BaseModel):
     weight: float = Field(1.0, ge=0.0, le=1.0, description="Confidence strength weight parameter")
 
 class RetrievedEvidence(BaseModel):
+    ruleset_version: str = Field("1.0", description="Rule repository engine version")
     retrieved_rules: List[RetrievedRule] = Field(default_factory=list)
     historical_match_count: int = Field(0, description="Matched patterns in historical message events")
     matched_sources: List[str] = Field(default_factory=list, description="IDs of indexes/rulesets queried")
