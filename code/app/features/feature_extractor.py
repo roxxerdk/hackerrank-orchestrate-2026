@@ -85,7 +85,7 @@ def _extract_group_features(inp: ExtractionInput) -> GroupFeatures:
     group_id = str(inp.message.get("group_id", ""))
     user_id = str(inp.message.get("user_id", ""))
     
-    if not group_id or group_id == "nan":
+    if not group_id or group_id == "nan" or str(inp.message.get("conversation_type", "")).lower() == "personal":
         return GroupFeatures()
         
     group_data = inp.context.groups_index.get(group_id)
@@ -144,7 +144,10 @@ def _extract_business_features(inp: ExtractionInput) -> BusinessFeatures:
     )
 
 def _extract_message_features(inp: ExtractionInput) -> MessageContentFeatures:
-    text = str(inp.message.get("message_text", ""))
+    text_val = inp.message.get("message_text", "")
+    # Handle NaN values mapping cleanly
+    text = "" if not isinstance(text_val, str) or text_val.lower() == "nan" else text_val
+    
     media_type_val = str(inp.message.get("media_type", ""))
     forwarded = float(inp.message.get("forwarded_count", 0))
     
@@ -194,7 +197,7 @@ def _extract_relationship_features(inp: ExtractionInput) -> RelationshipFeatures
     business_id = str(inp.message.get("business_id", ""))
     
     is_known = sender_id in inp.context.users_index
-    is_business = bool(business_id and business_id != "nan")
+    is_business = business_id in inp.context.business_index
     
     conversation = inp.context.conversation_history.get((user_id, sender_id))
     frequent = False
@@ -322,12 +325,15 @@ def extract_features(
                 rel_path = context.voice_lookup.get(media_id, "")
                 
             if rel_path:
+                abs_path = (DATASET_DIR / rel_path).resolve()
+                file_size_bytes = abs_path.stat().st_size if abs_path.exists() and abs_path.is_file() else 0
+                
                 media_info = MediaInfo(
                     media_id=media_id,
                     media_type=media_type,
-                    file_path=(DATASET_DIR / rel_path).resolve(),
+                    file_path=abs_path,
                     mime_type="image/jpeg" if media_type == MediaType.IMAGE else "audio/mpeg",
-                    file_size_bytes=0
+                    file_size_bytes=file_size_bytes
                 )
                 media_analysis = load_analysis(media_info)
         except Exception as e:
