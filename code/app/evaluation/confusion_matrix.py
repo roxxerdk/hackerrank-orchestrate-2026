@@ -37,6 +37,11 @@ def compute_metrics(
             support=support
         )
         
+    # Calculate macro-averaged statistics
+    macro_precision = sum(m.precision for m in per_class.values()) / len(per_class) if per_class else 0.0
+    macro_recall = sum(m.recall for m in per_class.values()) / len(per_class) if per_class else 0.0
+    macro_f1 = sum(m.f1_score for m in per_class.values()) / len(per_class) if per_class else 0.0
+        
     # Build Confusion Matrix mapping Dict[true_label, Dict[pred_label, count]]
     matrix = {true_c: {pred_c: 0 for pred_c in classes} for true_c in classes}
     for p, g in zip(predictions, ground_truth):
@@ -44,6 +49,9 @@ def compute_metrics(
         
     return EvaluationReport(
         accuracy=accuracy,
+        macro_precision=macro_precision,
+        macro_recall=macro_recall,
+        macro_f1=macro_f1,
         per_class_metrics=per_class,
         confusion_matrix=matrix
     )
@@ -51,7 +59,12 @@ def compute_metrics(
 def print_evaluation_report(report: EvaluationReport) -> None:
     """Prints a beautiful summary report formatted to stdout."""
     print("\n" + "="*50)
-    print(f" PIPELINE PERFORMANCE EVALUATION REPORT (Accuracy: {report.accuracy*100:.1f}%)")
+    print(f" PIPELINE PERFORMANCE EVALUATION REPORT")
+    print("="*50)
+    print(f"  Accuracy:        {report.accuracy*100:.1f}%")
+    print(f"  Macro Precision: {report.macro_precision*100:.1f}%")
+    print(f"  Macro Recall:    {report.macro_recall*100:.1f}%")
+    print(f"  Macro F1-Score:  {report.macro_f1*100:.1f}%")
     print("="*50)
     print(f"{'Class':<12} | {'Precision':<10} | {'Recall':<10} | {'F1-Score':<10} | Support")
     print("-"*50)

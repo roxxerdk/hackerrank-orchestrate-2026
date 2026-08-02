@@ -16,6 +16,7 @@ class TestEvaluationFramework(unittest.TestCase):
         
         report = compute_metrics(predictions, ground_truth)
         self.assertEqual(report.accuracy, 0.75)
+        self.assertGreater(report.macro_precision, 0.0)
         self.assertEqual(report.per_class_metrics["mute"].precision, 1.0)
         self.assertEqual(report.per_class_metrics["digest"].recall, 0.5)
         self.assertEqual(report.confusion_matrix["notify"]["notify"], 1)

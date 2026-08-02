@@ -1,0 +1,12 @@
+{
+  "message_id": "sample_msg_041",
+  "action": "digest",
+  "confidence": 0.5786923076923077,
+  "applied_rules": [],
+  "timestamp": "2026-08-02T04:54:36.688418+00:00",
+  "versions": {
+    "ruleset_version": "1.0",
+    "confidence_version": "1.0",
+    "pipeline_version": "1.0"
+  }
+}
