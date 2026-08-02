@@ -111,10 +111,12 @@ class RetrievedEvidence(BaseModel):
     matched_sources: List[str] = Field(default_factory=list, description="IDs of indexes/rulesets queried")
 
 class ConfidenceBreakdown(BaseModel):
+    confidence_version: str = Field("1.0", description="Confidence calculation logic version")
     base_confidence: float = Field(0.5, ge=0.0, le=1.0)
     safety_penalty: float = Field(0.0, ge=0.0, le=1.0)
     user_engagement_bonus: float = Field(0.0, ge=0.0, le=1.0)
     rule_strength_bonus: float = Field(0.0, ge=0.0, le=1.0)
+    system_load_penalty: float = Field(0.0, ge=0.0, le=1.0)
     final_confidence: float = Field(..., ge=0.0, le=1.0)
 
 class RoutingDecision(BaseModel):
