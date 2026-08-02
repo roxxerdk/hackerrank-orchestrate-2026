@@ -41,6 +41,9 @@ from app.config import (
     USER_OPEN_CAP,
     USER_DISMISS_CAP,
     DATASET_DIR,
+    FREQUENT_CONTACT_THRESHOLD,
+    GROUP_HIGH_ACTIVITY_THRESHOLD,
+    GROUP_LOW_ACTIVITY_THRESHOLD,
 )
 
 logger = logging.getLogger("feature_extractor")
@@ -102,9 +105,9 @@ def _extract_group_features(inp: ExtractionInput) -> GroupFeatures:
     if group_data:
         member_count = int(group_data.get("member_count", 0))
         messages_sent = float(group_data.get("messages_30d", 0))
-        if messages_sent > 1000:
+        if messages_sent > GROUP_HIGH_ACTIVITY_THRESHOLD:
             activity_level = ActivityLevel.HIGH
-        elif messages_sent < 100:
+        elif messages_sent < GROUP_LOW_ACTIVITY_THRESHOLD:
             activity_level = ActivityLevel.LOW
             
     return GroupFeatures(
@@ -202,8 +205,8 @@ def _extract_relationship_features(inp: ExtractionInput) -> RelationshipFeatures
     conversation = inp.context.conversation_history.get((user_id, sender_id))
     frequent = False
     if conversation:
-        # User is frequent if interaction exceeds 15 messages historically
-        frequent = conversation.message_count > 15
+        # User is frequent if interaction exceeds threshold
+        frequent = conversation.message_count > FREQUENT_CONTACT_THRESHOLD
         
     return RelationshipFeatures(
         sender_is_known=is_known,
