@@ -102,6 +102,7 @@ class RetrievedRule(BaseModel):
     condition_description: str = Field(..., description="Readable definition of logic triggers")
     priority: int = Field(0, description="Precedence rank on conflicting decisions")
     weight: float = Field(1.0, ge=0.0, le=1.0, description="Confidence strength weight parameter")
+    recommended_action: ActionType = Field(ActionType.DIGEST, description="Recommended output path target")
 
 class RetrievedEvidence(BaseModel):
     ruleset_version: str = Field("1.0", description="Rule repository engine version")

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from typing import Callable, List, Final
-from app.reasoning.schemas import ReasoningContext, RuleCategory, RetrievedRule
+from typing import Final, Callable, List
+from app.reasoning.schemas import ReasoningContext, RuleCategory, RetrievedRule, ActionType
 
 RULESET_VERSION: Final[str] = "1.0"
 
@@ -23,6 +23,7 @@ class RuleDefinition:
     weight: float
     description: str
     evaluator: Callable[[ReasoningContext], bool]
+    recommended_action: ActionType
 
     def to_retrieved_rule(self) -> RetrievedRule:
         return RetrievedRule(
@@ -30,7 +31,8 @@ class RuleDefinition:
             category=self.category,
             condition_description=self.description,
             priority=self.priority,
-            weight=self.weight
+            weight=self.weight,
+            recommended_action=self.recommended_action
         )
 
 # Named Evaluators
@@ -72,7 +74,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_SAFETY,
         weight=1.0,
         description="Sender official domain does not match official brand metadata domain.",
-        evaluator=safety_domain_mismatch
+        evaluator=safety_domain_mismatch,
+        recommended_action=ActionType.MUTE
     ),
     RuleDefinition(
         rule_id="RULE_SAFETY_HIGH_FORWARD",
@@ -80,7 +83,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_SAFETY,
         weight=0.9,
         description="Message content has been forwarded past standard threshold levels.",
-        evaluator=safety_high_forward
+        evaluator=safety_high_forward,
+        recommended_action=ActionType.MUTE
     ),
     RuleDefinition(
         rule_id="RULE_USER_DND_ACTIVE",
@@ -88,7 +92,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_USER,
         weight=0.95,
         description="Recipient is currently within do_not_disturb window boundaries.",
-        evaluator=user_in_dnd
+        evaluator=user_in_dnd,
+        recommended_action=ActionType.DIGEST
     ),
     RuleDefinition(
         rule_id="RULE_USER_GROUP_MUTED",
@@ -96,7 +101,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_USER,
         weight=1.0,
         description="Target group has been explicitly muted by the recipient.",
-        evaluator=user_group_muted
+        evaluator=user_group_muted,
+        recommended_action=ActionType.MUTE
     ),
     RuleDefinition(
         rule_id="RULE_BUSINESS_PROMO_OPT_OUT",
@@ -104,7 +110,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_USER,
         weight=0.9,
         description="User explicitly disabled promotional material from this business.",
-        evaluator=business_not_allowed_promo
+        evaluator=business_not_allowed_promo,
+        recommended_action=ActionType.DIGEST
     ),
     RuleDefinition(
         rule_id="RULE_BUSINESS_VERIFIED_TRUST",
@@ -112,7 +119,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_BUSINESS,
         weight=0.8,
         description="Verified business has active history and high interaction scores.",
-        evaluator=business_verified_interaction
+        evaluator=business_verified_interaction,
+        recommended_action=ActionType.NOTIFY
     ),
     RuleDefinition(
         rule_id="RULE_MEDIA_PAYMENT_REQUEST",
@@ -120,7 +128,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_URGENCY,
         weight=0.9,
         description="Media analysis indicates payment requests or payment receipts are present.",
-        evaluator=media_payment_request
+        evaluator=media_payment_request,
+        recommended_action=ActionType.NOTIFY
     ),
     RuleDefinition(
         rule_id="RULE_MEDIA_QR_PRESENT",
@@ -128,7 +137,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_URGENCY,
         weight=0.7,
         description="Multimodal check indicates a scannable QR layout was identified.",
-        evaluator=media_has_qr
+        evaluator=media_has_qr,
+        recommended_action=ActionType.NOTIFY
     ),
     RuleDefinition(
         rule_id="RULE_RELATIONSHIP_FREQUENT",
@@ -136,7 +146,8 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_RELATIONSHIP,
         weight=0.6,
         description="Sender has high interaction volumes and message history counts.",
-        evaluator=relationship_frequent
+        evaluator=relationship_frequent,
+        recommended_action=ActionType.NOTIFY
     ),
     RuleDefinition(
         rule_id="RULE_SYSTEM_LOAD_ALERT",
@@ -144,6 +155,7 @@ RULES: List[RuleDefinition] = [
         priority=PRIORITY_SYSTEM,
         weight=0.5,
         description="System notify alert volume sent to the recipient today is high.",
-        evaluator=system_high_load
+        evaluator=system_high_load,
+        recommended_action=ActionType.DIGEST
     )
 ]
