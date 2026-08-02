@@ -119,9 +119,24 @@ class ConfidenceBreakdown(BaseModel):
     system_load_penalty: float = Field(0.0, ge=0.0, le=1.0)
     final_confidence: float = Field(..., ge=0.0, le=1.0)
 
+class DecisionMetadata(BaseModel):
+    ruleset_version: str = Field(..., description="Active ruleset schema version")
+    confidence_version: str = Field(..., description="Active confidence algorithm version")
+    pipeline_version: str = Field("1.0", description="Active pipeline orchestrator version")
+    execution_time_ms: float = Field(..., description="Pipeline execution duration in milliseconds")
+    evaluated_rule_count: int = Field(..., description="Total rules evaluated in rule repository")
+    matched_rule_count: int = Field(..., description="Total rules triggered during retrieval")
+
 class RoutingDecision(BaseModel):
     action: ActionType = Field(..., description="Decision output path: notify, digest, mute")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Evaluated output confidence score")
     applied_rules: List[str] = Field(default_factory=list, description="IDs of rules triggered during reasoning")
     rationale: List[str] = Field(default_factory=list, description="Readable justifications explaining the path")
     confidence_breakdown: Optional[ConfidenceBreakdown] = None
+
+class FinalRoutingResult(BaseModel):
+    decision: RoutingDecision
+    confidence: ConfidenceBreakdown
+    evidence: RetrievedEvidence
+    reasoning_context: ReasoningContext
+    metadata: DecisionMetadata
