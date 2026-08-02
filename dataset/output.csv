@@ -1,111 +1,111 @@
 message_id,action,message_type,reason,confidence,evidence_message_ids
-msg_023,,,,,
-msg_091,,,,,
-msg_090,,,,,
-msg_048,,,,,
-msg_040,,,,,
-msg_075,,,,,
-msg_005,,,,,
-msg_104,,,,,
-msg_069,,,,,
-msg_107,,,,,
-msg_070,,,,,
-msg_003,,,,,
-msg_099,,,,,
-msg_008,,,,,
-msg_092,,,,,
-msg_060,,,,,
-msg_004,,,,,
-msg_030,,,,,
-msg_045,,,,,
-msg_052,,,,,
-msg_009,,,,,
-msg_071,,,,,
-msg_016,,,,,
-msg_065,,,,,
-msg_038,,,,,
-msg_086,,,,,
-msg_014,,,,,
-msg_094,,,,,
-msg_029,,,,,
-msg_105,,,,,
-msg_002,,,,,
-msg_010,,,,,
-msg_078,,,,,
-msg_013,,,,,
-msg_018,,,,,
-msg_044,,,,,
-msg_032,,,,,
-msg_106,,,,,
-msg_006,,,,,
-msg_109,,,,,
-msg_108,,,,,
-msg_019,,,,,
-msg_088,,,,,
-msg_056,,,,,
-msg_027,,,,,
-msg_050,,,,,
-msg_083,,,,,
-msg_063,,,,,
-msg_033,,,,,
-msg_061,,,,,
-msg_020,,,,,
-msg_017,,,,,
-msg_058,,,,,
-msg_026,,,,,
-msg_047,,,,,
-msg_046,,,,,
-msg_042,,,,,
-msg_079,,,,,
-msg_098,,,,,
-msg_037,,,,,
-msg_007,,,,,
-msg_085,,,,,
-msg_001,,,,,
-msg_021,,,,,
-msg_028,,,,,
-msg_012,,,,,
-msg_064,,,,,
-msg_103,,,,,
-msg_031,,,,,
-msg_057,,,,,
-msg_087,,,,,
-msg_067,,,,,
-msg_039,,,,,
-msg_082,,,,,
-msg_066,,,,,
-msg_049,,,,,
-msg_015,,,,,
-msg_051,,,,,
-msg_097,,,,,
-msg_089,,,,,
-msg_053,,,,,
-msg_059,,,,,
-msg_024,,,,,
-msg_072,,,,,
-msg_036,,,,,
-msg_076,,,,,
-msg_055,,,,,
-msg_102,,,,,
-msg_080,,,,,
-msg_093,,,,,
-msg_034,,,,,
-msg_035,,,,,
-msg_101,,,,,
-msg_041,,,,,
-msg_011,,,,,
-msg_110,,,,,
-msg_095,,,,,
-msg_074,,,,,
-msg_073,,,,,
-msg_054,,,,,
-msg_068,,,,,
-msg_100,,,,,
-msg_062,,,,,
-msg_096,,,,,
-msg_043,,,,,
-msg_077,,,,,
-msg_081,,,,,
-msg_025,,,,,
-msg_084,,,,,
-msg_022,,,,,
+msg_023,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_091,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0238;message_0381
+msg_090,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_048,digest,greeting,Legitimate update with no urgent or immediate action required.,0.5,message_0151;message_0152
+msg_040,mute,forward,Group is explicitly muted by the recipient.,0.72,message_0136;message_0135
+msg_075,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_005,notify,payment,Urgent conversation thread requires recipient attention.,0.68,message_0332;message_0114
+msg_104,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0116;message_0115
+msg_069,mute,forward,Group is explicitly muted by the recipient.,0.72,message_0247;message_0079
+msg_107,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0045;message_0173
+msg_070,digest,scam,Legitimate update with no urgent or immediate action required.,0.74,message_0045;message_0173
+msg_003,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_099,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0117;message_0249
+msg_008,digest,urgent,Legitimate update with no urgent or immediate action required.,0.74,none
+msg_092,digest,business_update,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_060,digest,promotion,Legitimate update with no urgent or immediate action required.,0.5,message_0176;message_0375
+msg_004,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_030,mute,payment,Group is explicitly muted by the recipient.,0.75,message_0116;message_0115
+msg_045,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0146;message_0145
+msg_052,mute,promotion,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_009,mute,personal,Group is explicitly muted by the recipient.,0.75,message_0073;message_0074
+msg_071,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0197;message_0198
+msg_016,digest,scam,Legitimate update with no urgent or immediate action required.,0.74,message_0024;message_0183
+msg_065,notify,promotion,Urgent conversation thread requires recipient attention.,0.7,none
+msg_038,mute,urgent,Mass forwarded message content exceeds safety limits.,0.72,message_0131;message_0132
+msg_086,mute,business_update,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_014,digest,payment,Business promotions are opted out. Routed to digest.,0.72,none
+msg_094,digest,promotion,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_029,mute,payment,Mass forwarded message content exceeds safety limits.,0.72,message_0332;message_0114
+msg_105,mute,payment,Mass forwarded message content exceeds safety limits.,0.72,message_0373;message_0233
+msg_002,digest,event,Legitimate update with no urgent or immediate action required.,0.5,message_0266;message_0169
+msg_010,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_078,mute,payment,Group is explicitly muted by the recipient.,0.72,message_0211;message_0212
+msg_013,digest,promotion,Legitimate update with no urgent or immediate action required.,0.5,message_0081;message_0082
+msg_018,mute,forward,Mass forwarded message content exceeds safety limits.,0.72,message_0092;message_0091
+msg_044,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0036;message_0143
+msg_032,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0119;message_0285
+msg_106,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0376;message_0234
+msg_006,notify,promotion,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_109,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0151;message_0152
+msg_108,mute,urgent,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_019,mute,promotion,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_088,mute,personal,Group is explicitly muted by the recipient.,0.75,message_0116;message_0115
+msg_056,mute,urgent,Group is explicitly muted by the recipient.,0.75,message_0054;message_0225
+msg_027,mute,payment,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_050,mute,business_update,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_083,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0219
+msg_063,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0181;message_0182
+msg_033,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0122;message_0280
+msg_061,mute,forward,Group is explicitly muted by the recipient.,0.72,message_0247;message_0079
+msg_020,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0095;message_0096
+msg_017,mute,urgent,Group is explicitly muted by the recipient.,0.75,message_0090;message_0089
+msg_058,mute,payment,Group is explicitly muted by the recipient.,0.72,message_0077;message_0040
+msg_026,mute,promotion,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_047,notify,payment,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_046,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0148;message_0147
+msg_042,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0139;message_0140
+msg_079,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0045;message_0173
+msg_098,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0054;message_0225
+msg_037,notify,personal,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_007,digest,event,Legitimate update with no urgent or immediate action required.,0.5,message_0070;message_0069
+msg_085,mute,business_update,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_001,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0139;message_0140
+msg_021,notify,payment,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_028,mute,promotion,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_012,mute,payment,Mass forwarded message content exceeds safety limits.,0.72,message_0247;message_0079
+msg_064,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0024;message_0183
+msg_103,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0332;message_0114
+msg_031,digest,greeting,Legitimate update with no urgent or immediate action required.,0.5,message_0117;message_0249
+msg_057,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0266;message_0169
+msg_087,mute,personal,Group is explicitly muted by the recipient.,0.75,message_0203;message_0391
+msg_067,notify,payment,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_039,digest,payment,Legitimate update with no urgent or immediate action required.,0.5,message_0403;message_0134
+msg_082,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0380;message_0397
+msg_066,digest,promotion,Business promotions are opted out. Routed to digest.,0.72,none
+msg_049,notify,business_update,Urgent conversation thread requires recipient attention.,0.7,none
+msg_015,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0085;message_0086
+msg_051,digest,promotion,Business promotions are opted out. Routed to digest.,0.72,none
+msg_097,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0054;message_0225
+msg_089,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_053,mute,payment,Mass forwarded message content exceeds safety limits.,0.72,message_0162;message_0411
+msg_059,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0045;message_0173
+msg_024,digest,promotion,Business promotions are opted out. Routed to digest.,0.72,none
+msg_072,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0085;message_0086
+msg_036,mute,business_update,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_076,mute,promotion,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_055,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0387;message_0165
+msg_102,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0266;message_0169
+msg_080,notify,personal,Urgent personal update from a frequent close contact.,0.65,message_0269;message_0180
+msg_093,digest,scam,Legitimate update with no urgent or immediate action required.,0.74,none
+msg_034,mute,urgent,Group is explicitly muted by the recipient.,0.72,message_0077;message_0040
+msg_035,digest,business_update,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_101,digest,personal,Legitimate update with no urgent or immediate action required.,0.74,message_0370;message_0229
+msg_041,mute,payment,Unverified sender domain mismatch indicates high spam risk.,0.75,none
+msg_011,mute,forward,Group is explicitly muted by the recipient.,0.72,message_0077;message_0040
+msg_110,digest,urgent,Legitimate update with no urgent or immediate action required.,0.5,message_0238;message_0381
+msg_095,digest,scam,Legitimate update with no urgent or immediate action required.,0.5,message_0024;message_0183
+msg_074,mute,payment,Group is explicitly muted by the recipient.,0.72,message_0203;message_0391
+msg_073,mute,forward,Mass forwarded message content exceeds safety limits.,0.72,message_0024;message_0183
+msg_054,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0203;message_0391
+msg_068,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0191;message_0192
+msg_100,digest,payment,Legitimate update with no urgent or immediate action required.,0.5,message_0117;message_0249
+msg_062,mute,payment,Mass forwarded message content exceeds safety limits.,0.72,message_0269;message_0180
+msg_096,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,none
+msg_043,mute,urgent,Mass forwarded message content exceeds safety limits.,0.72,message_0269;message_0180
+msg_077,digest,event,Legitimate update with no urgent or immediate action required.,0.74,message_0403;message_0134
+msg_081,digest,personal,Legitimate update with no urgent or immediate action required.,0.5,message_0217
+msg_025,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_084,digest,business_update,Business promotions are opted out. Routed to digest.,0.72,none
+msg_022,digest,payment,Legitimate update with no urgent or immediate action required.,0.5,message_0099;message_0100

@@ -18,6 +18,7 @@ from app.reasoning.schemas import (
     TemporalContext,
     SystemContext,
     RuleCategory,
+    ActionType
 )
 from app.reasoning.rule_repository import RuleDefinition, RULES
 from app.reasoning.retrieval_engine import retrieve_rules
@@ -116,7 +117,8 @@ class TestRetrievalEngine(unittest.TestCase):
             priority=1000,
             weight=1.0,
             description="Always errors.",
-            evaluator=bad_evaluator
+            evaluator=bad_evaluator,
+            recommended_action=ActionType.MUTE
         )
         
         from unittest.mock import patch
