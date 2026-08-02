@@ -144,26 +144,24 @@ Time Remaining: <Xd Yh Zm, or not configured>
 
 ### 5.2 Per-Turn Entry
 
-Append after every user message you respond to:
+The conversation log follows the chronological development timeline structure below:
 
 ```text
-## [ISO-8601 TIMESTAMP] <short title, max 80 chars>
+## [ISO-8601 TIMESTAMP] <Milestone Title>
 
-User Prompt (verbatim, secrets redacted):
-<exact user message, with secrets replaced by [REDACTED]>
+Objective
+<Functional goal of the milestone>
 
-Agent Response Summary:
-<2-5 sentences: what was done, why, and any important decision>
+Implementation Highlights
+• <Detailed task completed>
+• <Detailed task completed>
 
-Actions:
-* <file edited / command run / tool invoked>
+Deliverables
+• <File path relative to repo>
+• <File path relative to repo>
 
-Context:
-tool=<agent_name>
-branch=<git_branch_or_unknown>
-repo_root=<absolute_path>
-worktree=<worktree_path_or_main>
-parent_agent=<parent_name_or_none>
+Outcome
+<Overall functional improvement details>
 ```
 
 ### 5.3 Sub-Agent And Worktree Rules
