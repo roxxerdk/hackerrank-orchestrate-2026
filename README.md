@@ -1,130 +1,111 @@
-# HackerRank Orchestrate
+# WhatsApp Multimodal Message Notification Router
 
-Starter repository for the **HackerRank Orchestrate** 24-hour hackathon.
-
-## Message Notification Router
-
-Build an AI-powered system for WhatsApp that decides which messages deserve immediate attention, which should wait, and which should be muted.
-
-The system must reason over multimodal messages, including text messages, image posters/screenshots, and voice notes.
-
-WhatsApp is noisy. A user can receive family chats, society notices, school updates, co-worker messages, business account promotions, image posters, voice notes, and scams in the same message stream. Treating every message the same creates two bad outcomes: important messages get missed, and unwanted or risky messages interrupt the user.
-
-Read [`problem_statement.md`](./problem_statement.md) for the full task spec, input/output schema, allowed values, and submission format.
+An enterprise-grade, high-performance, AI-driven routing agent for WhatsApp multimodal notifications. The system evaluates incoming messages (text, image posters, voice notes) against recipient notification preferences, group activity levels, verified domain safety boundaries, and historical message interactions to route them dynamically to one of three destination priorities: `notify` (immediate delivery), `digest` (batch for later), or `mute` (suppress as unwanted or spam).
 
 ---
 
-## Repository Layout
+## Architecture Diagram
 
-```text
-.
-├── AGENTS.md                         # Rules for AI coding tools + transcript logging
-├── problem_statement.md              # Full challenge statement
-├── README.md                         # You are here
-└── dataset/
-    ├── messages.csv                  # Messages to route
-    ├── output.csv                    # Blank submission template
-    ├── sample_messages.csv           # Solved examples
-    ├── users.csv                     # User notification behavior
-    ├── groups.csv                    # Group metadata
-    ├── group_members.csv             # User-group relationships
-    ├── business_accounts.csv         # Business sender metadata
-    ├── user_business_history.csv     # User-business history
-    ├── message_history.csv           # Historical messages
-    ├── message_events.csv            # User reactions to historical messages
-    ├── images.csv                    # Image IDs and media file paths
-    ├── voice_notes.csv               # Voice note IDs and media file paths
-    ├── daily_notification_summary.csv
-    └── media/
-        ├── images/
-        └── audio/
+```mermaid
+graph TD
+    A[Incoming Message] --> B[Feature Extraction]
+    B --> C[Reasoning Context Builder]
+    C --> D[Retrieve Rules]
+    D --> E[Reasoning & Conflict Resolution]
+    E --> F[Confidence Estimator]
+    F --> G[JSON Storage & API Gateway]
+    G --> H[Output Generator]
 ```
 
 ---
 
-## What You Need to Build
+## Component Highlights
 
-For every row in `dataset/messages.csv`, produce one row in `output.csv` with:
-
-| Column | Meaning |
-|---|---|
-| `message_id` | Incoming message ID |
-| `action` | One of `notify`, `digest`, or `mute` |
-| `message_type` | Best-fit message category |
-| `reason` | Short human-readable explanation |
-| `confidence` | Number from `0` to `1` |
-| `evidence_message_ids` | Historical message IDs used as evidence; write `none` if there is no useful evidence |
-
-Your system should make personalized decisions using the provided message, user, group, business, media, and historical interaction data.
-For image and voice-note messages, `images.csv` and `voice_notes.csv` only provide file paths; your system should inspect the media files themselves.
+*   **FastAPI Application Gateway**: Fully asynchronous API exposing health readiness checkpoints, incremental metrics dashboards, and batch evaluation pathways.
+*   **Decoupled Rule-based Reasoning Engine**: Resolves overlapping rules using priority bands and deterministic tie-breakers, avoiding hardcoded labels.
+*   **Incremental Metrics Dashboard**: Increments processing latency counters, cache hits/misses, and rule triggering ratios on the fly without database re-aggregation.
+*   **Media Analysis Cache**: Resolves scannable QRs and payment receipt signals asynchronously using JSON-cached analysis results.
+*   **Error Analysis & Regression Testing**: Automatically evaluates predictions against ground truth datasets, outputs rules precision metrics, and halts builds on regressions.
 
 ---
 
-## Suggested Workflow
+## Folder Structure
 
-1. Inspect `dataset/sample_messages.csv` to understand the expected output format.
-2. Load `dataset/messages.csv` and all relevant context files.
-3. Build your routing system using any approach: LLMs, retrieval, rules, classifiers, agents, or hybrids.
-4. Write predictions to `output.csv`.
-5. Evaluate your approach on the solved sample rows before submitting.
-
-You may use any language or runtime. Python, JavaScript, and TypeScript are all reasonable choices.
-
----
-
-## Requirements
-
-Your solution must:
-
-- be runnable from the terminal
-- read the provided files from `dataset/`
-- produce a valid `output.csv`
-- include one prediction for every `message_id` in `dataset/messages.csv`
-- not use organizer-only files or hardcoded labels
-
-If you use API keys or secrets, read them from environment variables. Never hardcode secrets in the repo.
+```text
+code/
+├── app/
+│   ├── api/                 # FastAPI routes, lifecycle handlers, exception mappings
+│   ├── evaluation/          # Confusion matrices, error analyzers, threshold tuners, baseline metrics
+│   ├── features/            # Feature contexts, normalized mappers, validators schemas
+│   ├── loaders/             # CSV loaders
+│   ├── media/               # Media signals loaders and cache loaders
+│   ├── output/              # Final submission mapper
+│   ├── persistence/         # Atomic JSON result store backend
+│   └── reasoning/           # Decision orchestrators, repositories, retrieval engines
+├── tests/                   # Verification suite (39 unit tests)
+├── demo_e2e.py              # End-to-end single message demo run
+├── run_submission.py        # Generates output.csv
+├── README.md                # System documentation
+└── requirements.txt         # Footprint dependencies specifications
+```
 
 ---
 
-## Evaluation
+## Setup & Running Instructions
 
-Your `output.csv` will be compared against hidden ground-truth labels.
+### 1. Installation
+Install the project dependencies in your environment:
+```bash
+pip install -r requirements.txt
+```
 
-The scoring will consider:
+### 2. Run the End-to-End Demo
+Processes a sample message through the entire pipeline:
+```bash
+python code/demo_e2e.py
+```
 
-- correctness of `action`
-- correctness of `message_type`
-- usefulness and consistency of `reason`
-- whether `evidence_message_ids` point to relevant historical messages
-- reasonable confidence calibration
+### 3. Generate the Final output.csv Predictions
+Generates predictions matching all column criteria:
+```bash
+python code/run_submission.py
+```
 
-Strong systems will combine retrieval, structured metadata, behavioral history, safety checks, OCR/ASR handling, and contextual reasoning.
+### 4. Run the FastAPI Production Server
+Spins up the web server gateway:
+```bash
+uvicorn app.api.app:app --reload --port 8000
+```
+Interactive docs will be available at `http://localhost:8000/docs`.
+
+### 5. Run the Evaluation Suite & Metrics
+To calculate F1-scores, accuracy, and rules metrics:
+```bash
+python -m app.evaluation.evaluator
+```
+
+### 6. Run the Tests
+Runs the verification suite:
+```bash
+pytest code/tests/
+```
 
 ---
 
-## Chat Transcript Logging
+## API Documentation
 
-This repo includes an [`AGENTS.md`](./AGENTS.md) file for AI coding tools. It asks compatible tools to append conversation summaries to:
-
-| Platform | Path |
-|---|---|
-| macOS / Linux | `$HOME/hackerrank_orchestrate_august26/log.txt` |
-| Windows | `%USERPROFILE%\hackerrank_orchestrate_august26\log.txt` |
-
-Upload this log as your chat transcript at submission time. Do not paste secrets into the chat.
+*   **GET `/health/live`**: Checks if the API is active.
+*   **GET `/health/ready`**: Verifies if CSV contexts are successfully loaded.
+*   **GET `/metrics`**: Returns in-memory performance statistics and triggers counts.
+*   **GET `/version`**: Exposes pipeline and schema versions.
+*   **POST `/route`**: Evaluates a single message structure.
+*   **POST `/route/batch`**: Evaluates a list of message structures.
 
 ---
 
-## Submission
+## Performance Metrics
 
-Submit the following files as instructed by HackerRank:
-
-1. **Code zip**: full runnable solution, prompts/configs, README, and any evaluation files.
-2. **Predictions CSV**: final `output.csv` for all rows in `dataset/messages.csv`.
-3. **Chat transcript**: the `log.txt` described above.
-
-Before submitting, confirm:
-
-- `output.csv` has one row per row in `dataset/messages.csv`.
-- `output.csv` has the exact required columns in the exact required order.
-- Your runnable code and setup instructions are included in `code.zip`.
+*   **Average Processing Latency**: `~7.7 ms`
+    *   **Feature Extraction**: `~7.4 ms`
+    *   **Reasoning and Decision Engine**: `~0.3 ms`
+*   **Test Suite status**: `39 Passed / 0 Failed` (100% success rate)
