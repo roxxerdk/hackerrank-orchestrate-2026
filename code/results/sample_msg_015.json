@@ -1,0 +1,15 @@
+{
+  "message_id": "sample_msg_015",
+  "action": "digest",
+  "confidence": 0.9482272727272728,
+  "applied_rules": [
+    "RULE_BUSINESS_PROMO_OPT_OUT",
+    "RULE_RELATIONSHIP_FREQUENT"
+  ],
+  "timestamp": "2026-08-02T05:03:58.772040+00:00",
+  "versions": {
+    "ruleset_version": "1.0",
+    "confidence_version": "1.0",
+    "pipeline_version": "1.0"
+  }
+}

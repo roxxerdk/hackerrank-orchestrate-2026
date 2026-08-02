@@ -1,0 +1,14 @@
+{
+  "message_id": "sample_msg_047",
+  "action": "notify",
+  "confidence": 0.8132272727272728,
+  "applied_rules": [
+    "RULE_RELATIONSHIP_FREQUENT"
+  ],
+  "timestamp": "2026-08-02T05:03:58.846987+00:00",
+  "versions": {
+    "ruleset_version": "1.0",
+    "confidence_version": "1.0",
+    "pipeline_version": "1.0"
+  }
+}

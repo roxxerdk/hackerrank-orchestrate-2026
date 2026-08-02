@@ -1,0 +1,14 @@
+{
+  "message_id": "sample_msg_014",
+  "action": "mute",
+  "confidence": 0.9865625,
+  "applied_rules": [
+    "RULE_SAFETY_HIGH_FORWARD"
+  ],
+  "timestamp": "2026-08-02T05:03:58.762598+00:00",
+  "versions": {
+    "ruleset_version": "1.0",
+    "confidence_version": "1.0",
+    "pipeline_version": "1.0"
+  }
+}
