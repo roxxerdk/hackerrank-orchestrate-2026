@@ -7,6 +7,9 @@ from app.reasoning.decision_service import evaluate_message
 from app.routing.schemas import RoutingServiceResult, PipelineMetadata
 from app.persistence.result_store import PersistenceBackend, JSONFilePersistenceBackend
 
+from pydantic import ValidationError
+from app.features.routing_features import FEATURE_SCHEMA_VERSION
+
 logger = logging.getLogger("routing_service")
 
 class RoutingService:
@@ -31,7 +34,7 @@ class RoutingService:
         context: FeatureExtractionContext
     ) -> RoutingServiceResult:
         start_time = time.perf_counter()
-        message_id = message.get("message_id", "unknown")
+        message_id = str(message.get("message_id", "unknown"))
         
         try:
             # 1. Feature Extraction
@@ -47,7 +50,7 @@ class RoutingService:
             
             metadata = PipelineMetadata(
                 pipeline_version=result.metadata.pipeline_version,
-                feature_version="1.0", # Track feature schema version
+                feature_version=FEATURE_SCHEMA_VERSION,
                 ruleset_version=result.metadata.ruleset_version,
                 confidence_version=result.metadata.confidence_version,
                 elapsed_ms=elapsed_ms
@@ -68,21 +71,32 @@ class RoutingService:
                 metadata=metadata
             )
             
+        except ValidationError as e:
+            elapsed_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.exception("Pydantic validation error processing message: %s", message_id)
+            return self._build_failure_result(str(e), elapsed_ms)
+            
+        except (IOError, OSError) as e:
+            elapsed_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.exception("I/O file storage error processing message: %s", message_id)
+            return self._build_failure_result(str(e), elapsed_ms)
+            
         except Exception as e:
             elapsed_ms = (time.perf_counter() - start_time) * 1000.0
-            logger.exception("Central boundary error handling caught exception on routing message: %s", message_id)
-            
-            metadata = PipelineMetadata(
-                pipeline_version="1.0",
-                feature_version="1.0",
-                ruleset_version="1.0",
-                confidence_version="1.0",
-                elapsed_ms=elapsed_ms
-            )
-            
-            return RoutingServiceResult(
-                success=False,
-                routing_result=None,
-                error=str(e),
-                metadata=metadata
-            )
+            logger.exception("Unexpected runtime execution error processing message: %s", message_id)
+            return self._build_failure_result(str(e), elapsed_ms)
+
+    def _build_failure_result(self, error_msg: str, elapsed_ms: float) -> RoutingServiceResult:
+        metadata = PipelineMetadata(
+            pipeline_version="1.0",
+            feature_version=FEATURE_SCHEMA_VERSION,
+            ruleset_version="1.0",
+            confidence_version="1.0",
+            elapsed_ms=elapsed_ms
+        )
+        return RoutingServiceResult(
+            success=False,
+            routing_result=None,
+            error=error_msg,
+            metadata=metadata
+        )

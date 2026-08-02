@@ -24,12 +24,13 @@ class JSONFilePersistenceBackend:
         file_path = self.base_dir / f"{message_id}.json"
         
         # Packaging schema
+        from datetime import datetime, timezone
         payload = {
             "message_id": message_id,
             "action": result.decision.action.value,
             "confidence": result.confidence.final_confidence,
             "applied_rules": result.decision.applied_rules,
-            "timestamp": result.reasoning_context.message_id, # Target context timestamp tracking
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "versions": {
                 "ruleset_version": result.metadata.ruleset_version,
                 "confidence_version": result.metadata.confidence_version,
@@ -51,4 +52,4 @@ class JSONFilePersistenceBackend:
                 except OSError:
                     pass
             logger.error("Failed to persist routing results: %s", e)
-            raise e
+            raise

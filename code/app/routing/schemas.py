@@ -7,7 +7,7 @@ class PipelineMetadata(BaseModel):
     feature_version: str = Field("1.0")
     ruleset_version: str = Field("1.0")
     confidence_version: str = Field("1.0")
-    elapsed_ms: float = Field(0.0)
+    elapsed_ms: float = Field(0.0, ge=0.0)
 
 class RoutingServiceResult(BaseModel):
     success: bool = Field(..., description="Flag indicating if the orchestrator completed successfully")

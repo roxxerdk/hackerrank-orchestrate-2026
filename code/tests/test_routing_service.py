@@ -71,5 +71,19 @@ class TestRoutingServiceIntegration(unittest.TestCase):
         # Verify custom save method was invoked once
         mock_persistence.save.assert_called_once()
 
+    def test_routing_persistence_failure(self):
+        # Mock persistence save to raise IOError to verify boundary captures it
+        mock_persistence = MagicMock()
+        mock_persistence.save.side_effect = IOError("Disk full or missing directory")
+        
+        err_service = RoutingService(persistence_backend=mock_persistence)
+        messages_df = self.datasets["messages"]
+        raw_msg = messages_df.iloc[0].to_dict()
+        
+        result = err_service.process_message(raw_msg, self.context)
+        self.assertFalse(result.success)
+        self.assertEqual(result.error, "Disk full or missing directory")
+        self.assertIsNone(result.routing_result)
+
 if __name__ == "__main__":
     unittest.main()
