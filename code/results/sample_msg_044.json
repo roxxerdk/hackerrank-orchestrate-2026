@@ -1,0 +1,14 @@
+{
+  "message_id": "sample_msg_044",
+  "action": "notify",
+  "confidence": 0.8857142857142858,
+  "applied_rules": [
+    "RULE_MEDIA_QR_PRESENT"
+  ],
+  "timestamp": "2026-08-02T04:54:36.720370+00:00",
+  "versions": {
+    "ruleset_version": "1.0",
+    "confidence_version": "1.0",
+    "pipeline_version": "1.0"
+  }
+}
