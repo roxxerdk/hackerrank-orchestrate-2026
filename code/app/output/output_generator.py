@@ -25,25 +25,21 @@ def classify_message_type(
     """
     text = str(message_text or "").lower()
     
-    # 1. High risk signals map straight to safety classifications
-    if is_scam:
+    # Check text indicators for scam/spam risk patterns first
+    scam_keywords = ["otp", "verification failed", "verify now", "account-login", "profile will be blocked", "password", "blocked tomorrow"]
+    if any(kw in text for kw in scam_keywords) or is_scam:
         return "scam"
     if is_spam:
         return "spam"
         
-    # Check text indicators for scam/spam risk patterns
-    scam_keywords = ["otp", "verification failed", "verify now", "account-login", "profile will be blocked", "password"]
-    if any(kw in text for kw in scam_keywords):
-        return "scam"
-        
-    # 2. Payment identifiers
-    if media_has_payment or "payment" in text or "invoice" in text or "rs" in text or "valuable feedback" in text:
+    # 2. Payment identifiers (QR or explicit cash requests)
+    if media_has_payment or "payment" in text or "invoice" in text or "rs" in text or "valuable feedback" in text or "scan this qr" in text or "clearance amount" in text:
         if "feedback" in text or "review" in text:
             return "business_update"
         return "payment"
         
     # 3. Urgency triggers
-    if "urgent" in text or "now" in text or "heads-up" in text or "valve is still open" in text or "alert" in text or "escalation" in text:
+    if "urgent" in text or "now" in text or "heads-up" in text or "valve is still open" in text or "alert" in text or "escalation" in text or "immediately" in text:
         return "urgent"
         
     # 4. Promotions opt-in/opt-out check
@@ -101,6 +97,10 @@ def generate_reason(
         return "Repetitive or unverified promotional content suppressed."
         
     else:  # digest
+        if message_type == "scam":
+            return "Potential scam or verification phishing alert detected."
+        if message_type == "spam":
+            return "Spam or suspicious mass message detected."
         if "RULE_BUSINESS_PROMO_OPT_OUT" in applied_rules:
             return "Business promotions are opted out. Routed to digest."
         if "RULE_SYSTEM_LOAD_ALERT" in applied_rules:
